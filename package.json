@@ -65,22 +65,22 @@
         "deb",
         "AppImage"
       ],
-      "maintainer": "ReconSuite",
-      "deb": {
-        "depends": [
-          "python3",
-          "python3-flask",
-          "python3-flask-cors",
-          "python3-dnspython",
-          "python3-whois",
-          "python3-reportlab",
-          "python3-bs4",
-          "python3-requests",
-          "python3-dotenv",
-          "python3-pil",
-          "python3-dateutil"
-        ]
-      }
+      "maintainer": "ReconSuite"
+    },
+    "deb": {
+      "depends": [
+        "python3",
+        "python3-flask",
+        "python3-flask-cors",
+        "python3-dnspython",
+        "python3-whois",
+        "python3-reportlab",
+        "python3-bs4",
+        "python3-requests",
+        "python3-dotenv",
+        "python3-pil",
+        "python3-dateutil"
+      ]
     }
   }
 }
