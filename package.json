@@ -1,0 +1,86 @@
+{
+  "name": "reconsuite-lite",
+  "version": "1.0.0",
+  "description": "Local passive reconnaissance dashboard for Linux",
+  "main": "main.js",
+  "author": "ReconSuite",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build:deb": "electron-builder --linux deb",
+    "build:appimage": "electron-builder --linux AppImage",
+    "build:linux": "electron-builder --linux deb AppImage"
+  },
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "local.reconsuite.lite",
+    "productName": "ReconSuite Lite",
+    "asar": true,
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "frontend/**/*",
+      "README.md",
+      "package.json",
+      "!frontend/**/*.bak",
+      "!frontend/**/*.save",
+      "!frontend/**/*.before-*"
+    ],
+    "extraResources": [
+      {
+        "from": "backend",
+        "to": "backend",
+        "filter": [
+          "**/*.py",
+          "requirements.txt",
+          "!**/__pycache__/**",
+          "!**/*.pyc",
+          "!**/*.db",
+          "!**/*.bak",
+          "!**/*.save",
+          "!**/.venv/**",
+          "!.env"
+        ]
+      },
+      {
+        "from": "frontend",
+        "to": "frontend",
+        "filter": [
+          "**/*",
+          "!**/*.bak",
+          "!**/*.save",
+          "!**/*.before-*"
+        ]
+      }
+    ],
+    "linux": {
+      "category": "Utility;Security",
+      "target": [
+        "deb",
+        "AppImage"
+      ],
+      "maintainer": "ReconSuite",
+      "deb": {
+        "depends": [
+          "python3",
+          "python3-flask",
+          "python3-flask-cors",
+          "python3-dnspython",
+          "python3-whois",
+          "python3-reportlab",
+          "python3-bs4",
+          "python3-requests",
+          "python3-dotenv",
+          "python3-pil",
+          "python3-dateutil"
+        ]
+      }
+    }
+  }
+}

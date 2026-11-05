@@ -1,0 +1,92 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self' http://127.0.0.1:8765; img-src 'self' data:">
+  <title>ReconSuite Lite — Port Scanner</title>
+  <link rel="stylesheet" href="/portscanner.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <a class="brand-link" href="/">← ReconSuite Lite</a>
+      <span class="page-title">Network Port Scanner</span>
+    </div>
+
+    <nav class="topbar-actions" aria-label="Main navigation">
+      <a class="nav-button" href="/">⌂ Dashboard</a>
+      <a class="nav-button" href="/history">▤ History</a>
+    </nav>
+  </header>
+
+
+  <main class="container">
+    <section class="card">
+      <h1>Port Scanner</h1>
+      <p class="muted">Scan systems you own or are authorized to assess.</p>
+
+      <form id="scanForm">
+        <label for="target">Target IP address or hostname</label>
+        <input id="target" name="target" placeholder="127.0.0.1" required
+               maxlength="253" autocomplete="off">
+
+        <label for="ports">Port selection</label>
+        <select id="ports" name="ports">
+          <option value="common">Common ports</option>
+          <option value="1-1024">Ports 1–1024</option>
+          <option value="custom">Custom port list or range</option>
+        </select>
+
+        <div id="customPortsWrap" class="hidden">
+          <label for="customPorts">Custom ports</label>
+          <input id="customPorts" placeholder="22,80,443,8000-8100">
+          <p class="muted">Use comma-separated ports and ranges, up to 2,000 ports.</p>
+        </div>
+
+        <label class="check">
+          <input id="versionDetection" type="checkbox">
+          Detect service versions (takes longer)
+        </label>
+
+        <div class="actions">
+          <button id="startBtn" type="submit">Start Scan</button>
+          <button id="stopBtn" type="button" class="stop" disabled>Stop Scan</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="result-heading">
+        <h2>Scan Results</h2>
+        <button id="exportBtn" type="button" disabled>Export CSV</button>
+        <button id="exportPdfBtn" type="button" disabled>Export PDF</button>
+      </div>
+      <p id="scanStatus" class="muted">Ready for a scan.</p>
+      <p id="connection" class="muted">Checking backend...</p>
+      <pre id="scanLog" class="log" aria-live="polite">No scan started.</pre>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Port</th>
+              <th>State</th>
+              <th>Service</th>
+              <th>Version / Details</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody">
+            <tr><td colspan="4" class="empty">No results yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="/portscanner.js"></script>
+</body>
+</html>

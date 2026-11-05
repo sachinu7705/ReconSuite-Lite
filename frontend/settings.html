@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings | ReconSuite Lite</title>
+<link rel="stylesheet" href="/settings.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <h2>◈ ReconSuite <span>Lite</span></h2>
+        <p class="side-label">WORKSPACE</p>
+
+        <a href="/">⌂ Dashboard</a>
+        <a href="/dns">⌕ DNS Lookup</a>
+        <a href="/whois">◉ WHOIS Lookup</a>
+        <a href="/portscanner">♧ Port Scanner</a>
+        <a href="/webdiscovery">▣ Web Discovery</a>
+        <a href="/vulnerability">⛨ Vulnerability</a>
+        <a href="/history">▤ History</a>
+
+        <p class="side-label">PREFERENCES</p>
+        <a href="/settings" class="active">⚙ Settings</a>
+
+        <div class="sidebar-footer">
+            <span class="status-dot"></span> Local-only workspace
+        </div>
+    </aside>
+
+    <main class="main">
+        <header class="header">
+            <div>
+                <h1>Settings</h1>
+                <p>Configure your ReconSuite Lite workspace.</p>
+            </div>
+            <a href="/" class="back-btn">← Dashboard</a>
+        </header>
+
+        <div class="notice">
+            ⚡ Settings are stored locally in this browser.
+        </div>
+
+        <section class="settings-card">
+            <h2>General Settings</h2>
+            <p>Basic application preferences.</p>
+
+            <label>Application Name
+                <input id="appName" type="text" value="ReconSuite Lite">
+            </label>
+
+            <label>Language
+                <select id="language">
+                    <option value="en">English</option>
+                </select>
+            </label>
+
+            <label>Startup Page
+                <select id="startupPage">
+                    <option value="/">Dashboard</option>
+                    <option value="/settings">Settings</option>
+                </select>
+            </label>
+        </section>
+
+        <section class="settings-card">
+            <h2>Appearance</h2>
+            <p>Customize your workspace interface.</p>
+
+            <label>Theme
+                <select id="theme">
+                    <option value="dark">Dark Mode</option>
+                    <option value="light">Light Mode</option>
+                </select>
+            </label>
+
+            <div class="toggle-row">
+                <div>
+                    <strong>Compact Interface</strong>
+                    <small>Reduce spacing between interface elements.</small>
+                </div>
+                <input type="checkbox" id="compactMode">
+            </div>
+        </section>
+
+        <section class="settings-card">
+            <h2>Scan Configuration</h2>
+            <p>Default preferences for reconnaissance operations.</p>
+
+            <label>Default Scan Profile
+                <select id="scanProfile">
+                    <option value="passive">Passive Recon (Recommended)</option>
+                    <option value="conservative">Passive Recon (Conservative)</option>
+                </select>
+            </label>
+
+            <label>Request Timeout (seconds)
+                <input type="number" id="timeout" min="3" max="120" value="15">
+            </label>
+
+            <label>Request Delay (milliseconds)
+                <input type="number" id="requestDelay" min="0" max="10000" value="1000">
+            </label>
+        </section>
+
+        <section class="settings-card">
+            <h2>Security & Privacy</h2>
+            <p>Workspace safety preferences.</p>
+
+            <div class="toggle-row">
+                <div>
+                    <strong>Passive Mode</strong>
+                    <small>Keep the workspace configured for passive reconnaissance.</small>
+                </div>
+                <input type="checkbox" id="passiveMode" checked>
+            </div>
+
+            <div class="toggle-row">
+                <div>
+                    <strong>Authorized Target Reminder</strong>
+                    <small>Display an authorization reminder before scans.</small>
+                </div>
+                <input type="checkbox" id="targetReminder" checked>
+            </div>
+        </section>
+
+        <section class="settings-card">
+            <h2>Report Preferences</h2>
+            <p>Configure report export preferences.</p>
+
+            <label>Default Export Format
+                <select id="exportFormat">
+                    <option value="pdf">PDF</option>
+                    <option value="json">JSON</option>
+                    <option value="csv">CSV</option>
+                </select>
+            </label>
+
+            <div class="toggle-row">
+                <div>
+                    <strong>Include Timestamp</strong>
+                    <small>Include scan date and time in reports.</small>
+                </div>
+                <input type="checkbox" id="includeTimestamp" checked>
+            </div>
+        </section>
+
+        <section class="settings-card">
+            <h2>About ReconSuite Lite</h2>
+            <div class="about-grid">
+                <div>Application<strong>ReconSuite Lite</strong></div>
+                <div>Version<strong>1.0.0</strong></div>
+                <div>Backend<strong>Flask</strong></div>
+                <div>Workspace<strong>Local</strong></div>
+            </div>
+        </section>
+
+        <div class="actions">
+            <button id="resetBtn" class="reset-btn">Reset Defaults</button>
+            <button id="saveBtn" class="save-btn">Save Settings</button>
+        </div>
+
+        <div id="message"></div>
+    </main>
+</div>
+
+<script src="/settings.js"></script>
+</body>
+</html>

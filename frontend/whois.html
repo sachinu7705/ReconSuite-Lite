@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WHOIS Intelligence | ReconSuite Lite</title>
+  <link rel="stylesheet" href="/whois.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="/" class="brand">R <span>ReconSuite Lite</span></a>
+    <nav>
+      <a href="/">Dashboard</a>
+      <a href="/dns">DNS Lookup</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="heading">
+      <div>
+        <p class="eyebrow">DOMAIN INTELLIGENCE</p>
+        <h1>WHOIS Lookup</h1>
+        <p>Inspect domain registration and ownership information.</p>
+      </div>
+      <span class="status">● WHOIS API Ready</span>
+    </div>
+
+    <section class="search-card">
+      <form id="whoisForm">
+        <label for="domain">Domain name</label>
+        <div class="search-row">
+          <input id="domain" value="google.com"
+                 placeholder="example.com" required>
+          <button id="lookupBtn" type="submit">Lookup WHOIS</button>
+        </div>
+      </form>
+    </section>
+
+    <div id="message">Enter a domain to begin WHOIS lookup.</div>
+
+    <section id="summary" class="summary hidden"></section>
+
+    <section class="results-card">
+      <div class="results-heading">
+        <h2>Registration Information</h2>
+        <button id="exportBtn" class="secondary" disabled>
+          Export PDF
+        </button>
+      </div>
+      <div id="details" class="details-grid">
+        <p>No WHOIS information loaded yet.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="/whois.js"></script>
+</body>
+</html>

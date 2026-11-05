@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Security Assistant | ReconSuite Lite</title>
+  <link rel="stylesheet" href="/ai.css">
+  <script src="/ai.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>ReconSuite <span>AI</span></h1>
+      <p>Local security analysis powered by Ollama</p>
+    </div>
+    <nav>
+      <a href="/">Dashboard</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="status-card">
+      <div>
+        <h2>AI Security Assistant</h2>
+        <p>Analyze saved evidence. No scans are started by this page.</p>
+      </div>
+      <span id="serviceStatus" class="status">Checking AI...</span>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h3><span>01</span> Vulnerability Analysis</h3>
+        <p>Analyze an existing saved vulnerability assessment.</p>
+        <label for="assessmentId">Assessment ID</label>
+        <input id="assessmentId" placeholder="Paste assessment ID">
+        <button data-analysis="vulnerability">Analyze Assessment</button>
+      </article>
+
+      <article class="card">
+        <h3><span>02</span> Port Scan Analysis</h3>
+        <p>Interpret existing port scan results and service exposure.</p>
+        <label for="scanId">Saved Scan ID</label>
+        <input id="scanId" placeholder="Paste saved scan ID">
+        <button data-analysis="port-scan">Analyze Port Scan</button>
+      </article>
+
+      <article class="card">
+        <h3><span>03</span> Recon Analysis</h3>
+        <p>Review existing reconnaissance results.</p>
+        <label for="reportId">Recon Report ID</label>
+        <input id="reportId" placeholder="Paste report folder ID">
+        <button data-analysis="recon">Analyze Recon Report</button>
+      </article>
+    </section>
+
+    <section class="card chat-card">
+      <div class="section-heading">
+        <div>
+          <h2>AI Chat</h2>
+          <p>Ask questions about defensive security and remediation.</p>
+        </div>
+        <button id="clearChat" class="secondary">Clear Chat</button>
+      </div>
+
+      <div id="chatMessages" class="messages" aria-live="polite">
+        <div class="bubble assistant">
+          Hello! I can explain security concepts, analyze supplied evidence,
+          and suggest defensive remediation. I do not run scans from this page.
+        </div>
+      </div>
+
+      <form id="chatForm">
+        <label for="chatInput">Your message</label>
+        <textarea id="chatInput" rows="3" maxlength="4000"
+          placeholder="Example: Explain the risks of an exposed SSH service..."
+          required></textarea>
+        <button id="sendButton" type="submit">Send Message</button>
+      </form>
+    </section>
+
+    <section class="card result-card">
+      <div class="section-heading">
+        <div>
+          <h2>Analysis Result</h2>
+          <p id="resultDescription">Your selected analysis will appear here.</p>
+        </div>
+        <button id="copyResult" class="secondary" disabled>Copy Result</button>
+      </div>
+      <pre id="analysisResult">No analysis run yet.</pre>
+    </section>
+
+    <p class="notice">
+      Safety: AI output is advisory and may be incorrect. Verify findings
+      against evidence. This interface never executes AI-generated commands
+      or initiates active security tests.
+    </p>
+  </main>
+</body>
+</html>

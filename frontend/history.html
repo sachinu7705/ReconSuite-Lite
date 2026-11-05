@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#080f1e">
+  <title>ReconSuite Lite — History Center</title>
+  <link rel="stylesheet" href="/history.css">
+  <script src="/history.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">⬡</div>
+        <div>
+          <div class="brand-name">ReconSuite <span>Lite</span></div>
+          <div class="eyebrow">Security Operations Workspace</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <span class="local-pill">
+          <i class="dot"></i>
+          Local workspace
+        </span>
+        <a class="btn" href="/">← Dashboard</a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Workspace / History Center</div>
+        <h1>Your Security History</h1>
+        <p>
+          Revisit previous scans, inspect findings, and reopen
+          target-specific reports from one place.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-title">
+      <div>
+        <h2>History Modules</h2>
+        <p>Choose the security activity you want to review.</p>
+      </div>
+    </section>
+
+    <section class="cards">
+      <article class="card recon">
+        <div class="card-icon">⌕</div>
+        <h3>Recon History</h3>
+        <p>
+          Review subdomain discovery, OSINT results, tool status,
+          and saved target reports.
+        </p>
+        <button class="btn module-btn" id="reconBtn" type="button">
+          <span>View recon reports</span><span>↗</span>
+        </button>
+      </article>
+
+      <article class="card ports">
+        <div class="card-icon">⌘</div>
+        <h3>Port Scan History</h3>
+        <p>
+          Review saved port scans, detected services, and download
+          reports in PDF format.
+        </p>
+        <button class="btn module-btn" id="portsBtn" type="button">
+          <span>View port scan history</span><span>↗</span>
+        </button>
+      </article>
+
+      <article class="card vuln">
+        <div class="card-icon">⚑</div>
+        <h3>Vulnerability History</h3>
+        <p>
+          Open the vulnerability assessment page to run checks,
+          review findings, and download PDF reports.
+        </p>
+        <button class="btn module-btn" id="vulnBtn" type="button">
+          <span>Open vulnerability assessment</span><span>↗</span>
+        </button>
+      </article>
+
+      <article class="card more">
+        <div class="card-icon">▦</div>
+        <h3>More Modules</h3>
+        <p>
+          Space for future security tools and their history
+          records.
+        </p>
+        <button class="btn module-btn" id="moreBtn" type="button">
+          <span>Explore modules</span><span>＋</span>
+        </button>
+      </article>
+    </section>
+
+    <section class="content-panel" id="historyPanel">
+      <div class="panel-header">
+        <div>
+          <div class="eyebrow" id="panelEyebrow">Saved activity</div>
+          <h2 id="panelTitle">Recon Reports</h2>
+          <p id="reportSummary">
+            Select a history module to load saved records.
+          </p>
+        </div>
+
+        <div class="panel-actions">
+          <input
+            id="search"
+            class="search"
+            type="search"
+            placeholder="Search targets or IDs..."
+            aria-label="Search history records"
+          >
+          <button class="btn" id="refreshBtn" type="button">
+            ↻ Refresh
+          </button>
+        </div>
+      </div>
+
+      <div id="reportList" class="report-list" aria-live="polite">
+        <div class="empty">
+          Choose Recon History or Port Scan History to view saved records.
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      ReconSuite Lite · Local workspace · Assess only systems you are
+      authorized to test.
+    </footer>
+  </main>
+  <!-- Custom Delete Confirmation Modal -->
+<div id="deleteConfirmModal" class="delete-modal" hidden>
+  <div class="delete-modal-backdrop"></div>
+
+  <div
+    class="delete-modal-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="deleteModalTitle"
+    aria-describedby="deleteModalMessage"
+    tabindex="-1"
+  >
+    <div class="delete-modal-icon">!</div>
+
+    <h2 id="deleteModalTitle">Delete Report?</h2>
+
+    <p id="deleteModalMessage">
+      Are you sure you want to permanently delete this report and its files?
+    </p>
+
+    <div class="delete-modal-report" id="deleteModalReport"></div>
+
+    <p class="delete-modal-warning">
+      This action cannot be undone.
+    </p>
+
+    <div class="delete-modal-actions">
+      <button type="button" id="cancelDeleteBtn" class="cancel-delete-btn">
+        Cancel
+      </button>
+
+      <button type="button" id="confirmDeleteBtn" class="confirm-delete-btn">
+        Delete Report
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- In-page notification -->
+<div id="historyToast" class="history-toast" role="status" aria-live="polite"></div>
+
+</body>
+</html>

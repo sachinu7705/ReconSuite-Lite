@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Discovery | ReconSuite Lite</title>
+    <link rel="stylesheet" href="/webdiscovery.css">
+</head>
+<body>
+
+<div class="container">
+    <header class="topbar">
+        <div>
+            <h1>Web Discovery</h1>
+            <p>Passive website intelligence and security analysis</p>
+        </div>
+        <button id="backBtn" class="secondary-btn">← Dashboard</button>
+    </header>
+
+    <section class="scan-panel">
+        <h2>Website Scanner</h2>
+        <p>Inspect publicly accessible website information.</p>
+
+        <div class="input-row">
+            <input
+                type="text"
+                id="targetUrl"
+                placeholder="https://example.com"
+                autocomplete="url"
+            >
+            <button id="scanBtn">Scan Website</button>
+        </div>
+
+        <p class="notice">
+            Use only on websites you own or are authorized to inspect.
+            This tool performs passive HTTP inspection only.
+        </p>
+
+        <div id="scanMessage"></div>
+    </section>
+
+    <section id="results" class="hidden">
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span>HTTP Status</span>
+                <strong id="httpStatus">-</strong>
+            </div>
+            <div class="stat-card">
+                <span>Technologies</span>
+                <strong id="technologyCount">0</strong>
+            </div>
+            <div class="stat-card">
+                <span>Internal Links</span>
+                <strong id="internalCount">0</strong>
+            </div>
+            <div class="stat-card">
+                <span>External Links</span>
+                <strong id="externalCount">0</strong>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-heading">
+                <h2>Website Information</h2>
+            </div>
+            <div class="info-grid">
+                <div><label>Target</label><p id="target"></p></div>
+                <div><label>Final URL</label><p id="finalUrl"></p></div>
+                <div><label>Website Title</label><p id="siteTitle"></p></div>
+                <div><label>Server</label><p id="server"></p></div>
+                <div><label>Content Type</label><p id="contentType"></p></div>
+                <div><label>Content Size</label><p id="contentSize"></p></div>
+                <div><label>Description</label><p id="description"></p></div>
+                <div><label>Canonical URL</label><p id="canonical"></p></div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>Security Headers</h2>
+            <div id="securityHeaders" class="result-list"></div>
+        </div>
+
+        <div class="section-card">
+            <h2>Technology Detection</h2>
+            <div id="technologies" class="tag-list"></div>
+        </div>
+
+        <div class="section-card">
+            <h2>Discovered Paths</h2>
+            <div id="paths" class="result-list"></div>
+        </div>
+
+        <div class="section-card">
+            <h2>Internal Links</h2>
+            <div id="internalLinks" class="result-list"></div>
+        </div>
+
+        <div class="section-card">
+            <h2>External Links</h2>
+            <div id="externalLinks" class="result-list"></div>
+        </div>
+
+        <div class="export-area">
+            <button id="exportBtn" class="secondary-btn">Export PDF</button>
+        </div>
+    </section>
+</div>
+
+<script src="/webdiscovery.js"></script>
+</body>
+</html>

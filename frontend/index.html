@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self' http://127.0.0.1:8765; img-src 'self' data:">
+  <title>ReconSuite Lite — Passive Recon Workspace</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark">R</div><div><div class="brand-name">ReconSuite <span>Lite</span></div><div class="brand-sub">Passive Recon Workspace</div></div></div>
+      <div class="top-context"><strong>Passive Recon Workspace</strong><span>Subdomain Discovery　|　OSINT　|　DNS Intelligence</span></div>
+      <button id="openAIHeaderBtn" class="button secondary">✦　AI Assistant</button>
+    </header>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="nav-list">
+        <button class="nav-item active" data-view="overview"><span>⌂</span> Overview</button>
+        <button class="nav-item" data-view="dns">
+          <span>◎</span> DNS Lookup
+        </button>
+
+        <button class="nav-item" data-view="whois">
+          <span>◉</span> WHOIS Lookup
+        </button>
+        <button class="nav-item" data-view="ports"><span>♧</span> Port Scanner</button>
+        <button class="nav-item" data-view="web"><span>▣</span> Web Discovery</button>
+        <button class="nav-item" data-view="vuln"><span>⛨</span> Vulnerability Check</button>
+        <button class="nav-item" id="openHistoryNavBtn">
+          <span>▤</span> History
+        </button>
+        <button class="nav-item" data-view="reports"><span>▥</span> Reports</button>
+        <button class="nav-item" data-view="settings"><span>⚙</span> Settings</button>
+        </div><div class="side-divider"></div>
+        <div class="side-label">SCAN HISTORY <button id="refreshHistoryBtn" class="icon-button" title="Refresh history">＋</button></div>
+        <div id="historyList" class="history-list"><div class="empty-small">No scans yet</div></div>
+        <div class="side-foot"><div class="side-label">WORKSPACE STATUS</div><div class="foot-status"><i></i> Local-only backend</div><p>Use only domains you own or are authorized to assess. Passive results may be incomplete.</p></div>
+      </aside>
+      <main class="main-content">
+        <section class="target-card">
+          <div class="target-grid">
+            <label class="field target-field"><span>Target Domain / URL</span><input id="targetInput" type="text" placeholder="example.com" autocomplete="off" spellcheck="false"></label>
+            <label class="field profile-field"><span>Scan Profile</span><select id="profileSelect"><option>Passive Recon (Recommended)</option><option>Passive Recon (Conservative)</option></select></label>
+            <button id="runBtn" class="button primary"><span>▶</span> Run Recon</button>
+            <button id="stopBtn" class="button stop" disabled title="Stop current scan">■</button>
+          </div>
+          <div class="tool-options">
+            <label class="check"><input type="checkbox" value="subfinder" checked><span>Subfinder</span></label>
+            <label class="check"><input type="checkbox" value="amass" checked><span>OWASP Amass</span></label>
+            <label class="check"><input type="checkbox" value="theHarvester" checked><span>theHarvester</span></label>
+            <button id="moreToolsBtn" class="button secondary more-tools" type="button" aria-expanded="false">More Tools　⌄</button><span class="options-spacer"></span><label class="check extra-check"><input type="checkbox" id="resolveHosts" checked><span>Resolve &amp; Check Live Hosts</span></label><label class="check extra-check"><input type="checkbox" id="saveScreenshots"><span>Save Screenshots</span></label>
+          </div>
+          <div class="progress-line"><div id="globalProgress"></div></div>
+          <div class="target-footer"><span class="status-text"><i id="statusDot"></i><span id="statusText">Ready — waiting for target</span></span><span id="targetHint">No active scan</span></div>
+        </section>
+        <section class="tool-grid">
+          <article class="tool-card" data-tool-card="subfinder"><div class="tool-icon cyan">⌘</div><div class="tool-content"><div class="tool-title">Subfinder <span class="tool-state" id="state-subfinder">Ready</span></div><p>Passive subdomain enumeration</p><small>Public data sources</small><div class="mini-progress"><div id="bar-subfinder"></div></div></div></article>
+          <article class="tool-card" data-tool-card="amass"><div class="tool-icon blue">◉</div><div class="tool-content"><div class="tool-title">OWASP Amass <span class="tool-state" id="state-amass">Ready</span></div><p>Passive enumeration and mapping</p><small>DNS and certificate sources</small><div class="mini-progress"><div id="bar-amass"></div></div></div></article>
+          <article class="tool-card" data-tool-card="theHarvester"><div class="tool-icon green">❖</div><div class="tool-content"><div class="tool-title">theHarvester <span class="tool-state" id="state-theHarvester">Ready</span></div><p>Public-source OSINT</p><small>Configured search backends</small><div class="mini-progress"><div id="bar-theHarvester"></div></div></div></article>
+        </section>
+        <section class="metric-grid">
+          <article class="metric-card"><div class="metric-symbol cyan">⌕</div><div><div class="metric-label">Unique Subdomains</div><strong id="metricSubs">—</strong></div></article>
+          <article class="metric-card"><div class="metric-symbol blue">▤</div><div><div class="metric-label">Sources Completed</div><strong id="metricTools">0 / 3</strong></div></article>
+          <article class="metric-card"><div class="metric-symbol green">◎</div><div><div class="metric-label">Live Hosts</div><strong id="metricLive">—</strong></div></article>
+          <article class="metric-card"><div class="metric-symbol purple">▧</div><div><div class="metric-label">Reports Generated</div><strong id="metricReports">0</strong></div></article>
+        </section>
+        <section class="results-card">
+          <div class="tabs">
+            <button class="tab" data-tab="live">Live Hosts <span id="liveCount">0</span></button>
+          </div>
+          <div id="resultsPanel">
+            <div class="result-controls"><label class="searchbox"><span>⌕</span><input id="searchInput" placeholder="Search subdomains..." autocomplete="off"></label><label class="filter-field">Source <select id="sourceFilter"><option value="all">All Sources</option><option value="subfinder">Subfinder</option><option value="amass">Amass</option><option value="theHarvester">theHarvester</option><option value="Merged">Merged</option></select></label><label class="filter-field">Status <select id="statusFilter"><option value="all">All</option><option value="Live">Live</option><option value="Unknown">Unknown</option></select></label><button id="exportPdfBtn" class="button secondary export-btn">⇩ Export PDF</button></div>
+            <div class="table-wrap"><table><thead><tr><th>#</th><th>Subdomain</th><th>Source</th><th>Status</th><th>IP Address</th><th>First Seen</th><th class="actions-col">Actions</th></tr></thead><tbody id="resultsBody"><tr><td colspan="7" class="empty-row">Run a passive scan to see results here.</td></tr></tbody></table></div>
+          </div>
+          <div id="activityPanel" class="activity-panel hidden"><div class="activity-toolbar"><span>Live backend events</span><button id="clearActivityBtn" class="button secondary compact">Clear</button></div><div id="activityLog" class="activity-log"></div></div>
+          <div id="dnsPanel" class="activity-panel hidden">
+            <section class="dns-workspace">
+
+              <div class="dns-heading">
+                <div>
+                  <h2>DNS &amp; WHOIS Intelligence</h2>
+                  <p>Inspect public DNS records for a domain.</p>
+                </div>
+                <span class="status-pill live">DNS Resolver Ready</span>
+              </div>
+
+              <div class="dns-search-card">
+                <form id="dnsForm">
+                  <label for="dnsDomain">Domain Name</label>
+                  <div class="dns-search-row">
+                    <input
+                      id="dnsDomain"
+                      type="text"
+                      placeholder="example.com"
+                      value="google.com"
+                      required
+                    >
+                    <button id="dnsLookupBtn" class="button primary" type="submit">
+                      Lookup DNS
+                    </button>
+                  </div>
+                </form>
+
+                <div class="dns-record-filters">
+                  <span>Record types:</span>
+                  <span>A</span>
+                  <span>AAAA</span>
+                  <span>MX</span>
+                  <span>NS</span>
+                  <span>TXT</span>
+                  <span>CNAME</span>
+                  <span>SOA</span>
+                </div>
+              </div>
+
+              <div id="dnsMessage" class="muted">
+                Enter a domain and select Lookup DNS.
+              </div>
+
+              <div id="dnsSummary" class="metric-grid hidden"></div>
+
+              <div class="dns-results-card">
+                <div class="dns-results-heading">
+                  <h3>DNS Records</h3>
+                  <button id="dnsExportBtn" class="button secondary" type="button" disabled>
+                    Export CSV
+                  </button>
+                </div>
+
+                <div id="dnsResults" class="table-wrap">
+                  <p class="placeholder">DNS records will appear here.</p>
+                </div>
+              </div>
+
+            </section>
+          </div>
+        
+        </section>
+      </main>
+      <aside class="rightbar">
+        <section class="right-card progress-card"><div class="right-heading"><h2>Scan Progress</h2><strong id="progressPct">0%</strong></div><div class="big-progress"><div id="bigProgress"></div></div><div class="progress-details"><div><span>Total Tools:</span><b id="progressTools">0 / 3</b></div><div><span>Elapsed Time:</span><b id="elapsedTime">—</b></div><div><span>Current Tool:</span><b id="currentTool">—</b></div><div><span>Status:</span><b id="rightStatus">Ready</b></div></div></section>
+        <section class="right-card activity-card"><div class="right-heading"><h2>Activity Log</h2><button id="clearLogBtn" class="button secondary compact">Clear</button></div><div id="rightLog" class="right-log"></div></section>
+        <section class="right-card quick-card"><button id="openFolderBtn" class="quick-action">▣ <span>Open Reports Folder</span> ↗</button><button id="refreshReportsBtn" class="quick-action">↻ <span>Refresh Reports</span></button></section>
+      </aside>
+    </div>
+    <div id="toast" class="toast" role="status"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

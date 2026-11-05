@@ -1,0 +1,44 @@
+# Node.js
+node_modules/
+npm-debug.log*
+
+# Electron build output
+dist/
+release/
+*.AppImage
+*.deb
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Local databases and scan results
+*.db
+*.sqlite
+*.sqlite3
+recon-reports/
+results/
+reports/
+
+# Backups and temporary files
+backups/
+*.bak
+*.backup
+*.save
+*.before-progress-fix
+
+# Local test documents
+test-*.pdf
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/

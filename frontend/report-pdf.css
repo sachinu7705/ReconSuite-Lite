@@ -1,0 +1,43 @@
+/* ReconSuite Lite - Report PDF Toolbar */
+
+.reconsuite-pdf-toolbar {
+    max-width: 1050px;
+    margin: 20px auto;
+    padding: 0 1rem;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.reconsuite-pdf-button {
+    background: #1268d5;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 8px;
+
+    padding: 12px 22px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.reconsuite-pdf-button:hover {
+    background: #084fa8;
+}
+
+.reconsuite-pdf-button:active {
+    transform: scale(0.98);
+}
+
+/* Print settings */
+
+@media print {
+    .reconsuite-pdf-toolbar {
+        display: none !important;
+    }
+}
